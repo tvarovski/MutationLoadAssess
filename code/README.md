@@ -5,7 +5,7 @@ In this project I want to focus on developing a way to capture *de novo* mutatio
 ---
 
 ## Figure to Reproduce:
-![Figure3 B, ref1](https://storage.googleapis.com/plos-corpus-prod/10.1371/journal.pgen.1006385/1/pgen.1006385.g003.PNG_L?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=wombat-sa%40plos-prod.iam.gserviceaccount.com%2F20210212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20210212T043652Z&X-Goog-Expires=3600&X-Goog-SignedHeaders=host&X-Goog-Signature=b650ea279fdf3c0cd70b6ea27703e2816fe86a4f48c919b024b21a4755046bdfef1dd7e29e0b33df4130184c93e792c19b7da6a614c769f20e0a2b8244e9af9daffba1eecd38b2f3b79d2c48cc5a3be2b934c2f6dd96c85fac286edd0e9c8b5b4c547c4bebdf527bf2de99b8ffdae64565c2dcf5d2be10dd02455be795d7824ceb2b29e3f0464a50af5258e52aaecb2015804d89288171705141f9bcbaca8dd3954b358f5a4b76a994f85272d0c6b3db31e656dd5223e5e1dc2732ab7561c0f464d4b0cebce637a546ed6016771db49278018f462334f864e40e09cec52619e3fbb01cb337d99493c02ba34fe3974d13b38049b340583aa252a311b582283652)
+![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
 
 *Figure Legend:*
 
