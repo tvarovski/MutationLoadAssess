@@ -22,7 +22,7 @@ The second, more recent paper expands on the paper above and examines more indiv
 
 ---
 ### Figure to Reproduce
-The following *Figure 3* taken from the ```Research Article #1``` shows in *A* a mutation load in clones derived from skin fibroblasts biopsied from two individuals (D1 & D2), from either the left (L) or right (R) side of the body, from hip (H) or forearm (F). Each sample shows how many new mutations were aquired throughout the the individual's life in that particular clone, and estimated yearly mutation rated based on the individuals's age. *B*, breaks down the clone-specific mutations by substitution class and shows their relative proportion for each clone. Investigating the changes in the proportion of base changes spectra might give insight into the mechanism by which these mutations were aquired. In this project, I want to reproduce the outcome shown in *Figure 3-B*.
+The following *Figure 3* taken from the `Research Article #1` shows in *A* a mutation load in clones derived from skin fibroblasts biopsied from two individuals (D1 & D2), from either the left (L) or right (R) side of the body, from hip (H) or forearm (F). Each sample shows how many new mutations were aquired throughout the the individual's life in that particular clone, and estimated yearly mutation rated based on the individuals's age. *B*, breaks down the clone-specific mutations by substitution class and shows their relative proportion for each clone. Investigating the changes in the proportion of base changes spectra might give insight into the mechanism by which these mutations were aquired. In this project, I want to reproduce the outcome shown in *Figure 3-B*.
 
 ![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
 *Figure Legend:*
@@ -31,7 +31,7 @@ The following *Figure 3* taken from the ```Research Article #1``` shows in *A* a
 ---
 ## Materials And Methods For Figure Reproduction
 
-The following is the ordered list of steps and materials required to conduct the type of analysis summarized in *Figure 3-B* from the ```Research Article #1```:
+The following is the ordered list of steps and materials required to conduct the type of analysis summarized in *Figure 3-B* from the `Research Article #1`:
 
 1. Skin fibroblast biopsy taken from a healthy individual.
 2. Isolation of a single fibroblast cell.
