@@ -113,7 +113,6 @@ After downloading and decrypting, the datasets are in the .sra format. To change
 $ sam-dump SRRnumber | samtools view -bS - > SRRnumber.bam
 ```
 
-
 ---
 ## Results
 
@@ -125,6 +124,6 @@ To be updated when the project results are available
 To be updated when the project results are available
 
 ---
-## Conclusions
+## Unexpected Contingencies
 
-To be updated when the project results are available
+Some challenges I've encountered were mostly centered around how to acquire data in the first place. For one, it is not publicly available so I had to create an account for the database it was held in, I had to be added as a downloader for that study through my PI, I had to download proprietary software for securely downloading the data from the servers (which hasn't been without problems and errors and troubleshooting to get it to work) and later processing. Even before downloading, I wasn't prepared for acquiring 400GB of data, I had to make space for that on my Argon account where I will be continuing the project. After downloading it turned out that the data is in an unfamiliar file format (SRA) which has to be converted to BAM for it to work in bioinformatic pipelines, and it also took me a while to figure out how to do it... Also, working with latge datasets takes proportionately more amount of time for downloading and processingwhich only adds to the frustration when something doesn't work.
