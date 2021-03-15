@@ -4,11 +4,11 @@
 
 Genomic mutations are believed to be one of the main contributing factors implicated in cancer and aging. These genetic changes constantly arise within the somatic cells during the lifespan and can be caused by both endogenous and exogenous mutagenic factors. The ability to find such newly arising mutations from lineage-inherited variants is a critical step for linking the potential mutagenic factors with the change in somatic mutation rates.
 
-The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells), by creating fibroblast derived clonal cell lineages and comparing them with the donor's blood sample. What allows for finding genetic changes that have been aquired throughout the life of the individual is captured by comparing genomes of the two tissues that have the same embrionic origin, in this case skin and blood. Any differences found can be ascribed to changes that have occured after the developmental divergence of the two tissues.
+The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells), by creating fibroblast-derived clonal cell lineages and comparing them with the donor's blood sample. What allows for finding genetic changes that have been acquired throughout the life of the individual is captured by comparing genomes of the two tissues that have the same embryonic origin, in this case, skin and blood. Any differences found can be ascribed to changes that have occurred after the developmental divergence of the two tissues.
 
-In this project I want to focus on replicating a way of capturing these *de novo* mutations that can be captured within individual genomes by sequencing DNA from single-cell derived, clonal populations of cells.
+In this project, I want to focus on replicating a way of capturing these de novo mutations that can be captured within individual genomes by sequencing DNA from single-cell-derived, clonal populations of cells.
 
-Simillar method can be employed for the study of impact of different mutagenic treatments (e.g. hydroxyurea, mitomycin-C) to directly study their effects by the analysis of WGS data from treated human cell cultures in various mutant backgrounds. I am particularly interested in studying mutagenic effects of such treatments in knockout mutants of genes involved in the DNA repair mechanisms.
+A similar method can be employed for the study of the impact of different mutagenic treatments (e.g. hydroxyurea, mitomycin-C) to directly study their effects by the analysis of WGS data from treated human cell cultures in various mutant backgrounds. I am particularly interested in studying the mutagenic effects of such treatments in knockout mutants of genes involved in the DNA repair mechanisms.
 
 ---
 ### Project Reference Articles
