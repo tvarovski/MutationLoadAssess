@@ -2,23 +2,27 @@
 
 ## Introduction
 
-Cancer and aging are believed to arise through mutations within the genomes. These genetic changes constantly arise within the somatic cells during the lifespan and can be caused by both endogenous and exogenous mutagenic factors. The ability to distinguish such newly arising mutations from lineage-inherited variants is a critical for linking potential mutagenic factors with a change in somatic mutation rates.
+Genomic mutations are believed to be one of the main contributing factors implicated in cancer and aging. These genetic changes constantly arise within the somatic cells during the lifespan and can be caused by both endogenous and exogenous mutagenic factors. The ability to find such newly arising mutations from lineage-inherited variants is a critical step for linking the potential mutagenic factors with the change in somatic mutation rates.
 
-In this project I want to focus on developing a way to capture *de novo* mutations within individual genomes from clonal populations of cells. The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells) that I eventually want to use for analysis of WGS data from human cell cultures that were subjected to different mutagenic treatments (e.g. hydroxyurea, mitomycin-C ) to directly study their effects in various mutant backgrounds.
+The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells), by creating fibroblast derived clonal cell lineages and comparing them with the donor's blood sample. What allows for finding genetic changes that have been aquired throughout the life of the individual is captured by comparing genomes of the two tissues that have the same embrionic origin, in this case skin and blood. Any differences found can be ascribed to changes that have occured after the developmental divergence of the two tissues.
+
+In this project I want to focus on replicating a way of capturing these *de novo* mutations that can be captured within individual genomes by sequencing DNA from single-cell derived, clonal populations of cells.
+
+Simillar method can be employed for the study of impact of different mutagenic treatments (e.g. hydroxyurea, mitomycin-C) to directly study their effects by the analysis of WGS data from treated human cell cultures in various mutant backgrounds. I am particularly interested in studying mutagenic effects of such treatments in knockout mutants of genes involved in the DNA repair mechanisms.
 
 ---
 ### Project Reference Articles
 This project is based on techniques and methods described in the two seminal research projects conducted under the leadership of Natalie Saini linked and briefly described below.
 
+The authors of the first study proposed a way to examine the link between UV exposure and mutation within genomes of single cells (human skin fibroblasts) of healthy individuals. This analysis was enabled by the specific mutatation signuture of UV-induced DNA damage which results in C→T changes and CpC→TpT dinucleotide changes. The authors of the study observed higher rates of these signatures within individuals in fibroblasts taken from forearm as compared to the hip.
+
+The second, more recent paper expands on the paper above by using the same methods and examines more individuals from more diverse backgrounds, among 21 healthy volunteers, ranging in ages from 25 to 79 years. The authors didn't find a connection between the age and sex of the donor, however, skin cells from darker-skined individuals had a lower median mutation load by ~2.5x compared to the skin cells from lighter-skinned individuals. This difference was attributed to the difference in UV-induced mutation signatures which suggests that melanin is protective against UV DNA damage.
+
 [**Research Article Reference #1**](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/references/Research%20Article%201.pdf)
 >Natalie Saini, Steven A. Roberts,Leszek J. Klimczak, Kin Chan, Sara A. Grimm, Shuangshuang Dai, David C. Fargo, Jayne C. Boyer, William K. Kaufmann, Jack A. Taylor, Eunjung Lee,Isidro Cortes-Ciriano, Peter J. Park, Shepherd H. Schurman, Ewa P. Malc, Piotr A. Mieczkowski, Dmitry A. Gordenin, "[The Impact of Environmental and Endogenous Damage on Somatic Mutation Load in Human Skin Fibroblasts](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006385)", *PLOS Genetics* October 27, 2016
 
-The authors of this study proposed a way to examine the link between UV exposure and mutation within genomes of single cells (human skin fibroblasts) of healthy individuals. This analysis was enabled by the specific mutatation signuture of UV-induced DNA damage which results in C→T changes and CpC→TpT dinucleotide changes. The authors of the study observed higher rates of these signatures within individuals in fibroblasts taken from forearm as compared to the hip.
-
 [**Research Article Reference #2**](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/references/Research%20Article%202.pdf)
 >Natalie Saini, Camille K. Giacobone, Leszek J. Klimczak, Brian N. Papas, Adam B. Burkholder, Jian-Liang Li, David C. Fargo, Re Bai, Kevin Gerrish, Cynthia L. Innes, Shepherd H. Schurman, Dmitry A. Gordenin, "[UV-exposure, endogenous DNA damage, and DNA replication errors shape the spectra of genome changes in human skin](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1009302)", *PLOS Genetics* January 14, 2021
-
-The second, more recent paper expands on the paper above and examines more individuals from more diverse backgrounds, among 21 healthy volunteers, ranging in ages from 25 to 79 years. The authors didn't find a connection between the age and sex of the donor, however, skin cells from darker-skined individuals had a lower median mutation load by ~2.5x compared to the skin cells from lighter-skinned individuals. This difference was attributed to the difference in UV-induced mutation signatures which suggests that melanin is protective against UV DNA damage.
 
 ---
 ### Figure to Reproduce
@@ -31,7 +35,7 @@ The following *Figure 3* taken from the `Research Article #1` shows in *A* a mut
 ---
 ## Materials And Methods For Figure Reproduction
 
-The following is the ordered list of steps and materials required to conduct the type of analysis summarized in *Figure 3-B* from the `Research Article #1`:
+The following is the ordered list of steps and materials required to conduct the type of analysis summarized in *Figure 3-B* from the `Research Article #1`. Steps 1-8 are presented here to show the entire process of the sample preparation and analysis. Steps 1-8 were conducted by the authors of the study and step 9 is a starting point for my efforts to reproduce the original outcomes:
 
 1. Skin fibroblast biopsy taken from a healthy individual.
 2. Isolation of a single fibroblast cell.
@@ -41,6 +45,9 @@ The following is the ordered list of steps and materials required to conduct the
 6. Read alignment to the reference [human genome (GRCh37)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13/) using [BWA-MEM-0.7.10](https://sourceforge.net/projects/bio-bwa/files/).
 7. Deduplication of reads by using [Picard Tools](https://broadinstitute.github.io/picard/) MarkDuplicates.
 8. Processing BAM files according to the [Genome Analysis Toolkit (GATK)](https://gatk.broadinstitute.org/hc/en-us) [best practices pipeline](https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows).
+
+>The preprocessed (steps 1-8) WGS data used in this study was uploaded into dbGAP under accession number ```phs001182.v1.p1``` in a BAM format.
+---
 9. Calling the SNVs by using three independent tools: haplotype caller from [GATK](https://gatk.broadinstitute.org/hc/en-us), [VarScan2](https://github.com/dkoboldt/varscan) and [MuTect](https://github.com/broadinstitute/mutect). Variant calling was limited to genomic regions with 10X+ coverage with 3+ reads supporting the call. Only variants common between outputs of all three tools were used in the analysis.
 10. Selecting for the somatic variants that are present only in the individuals' fibroblasts, but not blood. This step removes all common mutations between the clonal fibroblast sample and blood.
 11. Removal of the known Human variants - dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)), and known Human simple repeat regions (UCSC Genome Browser, [hg19 build](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13/)) from the variant list.
@@ -48,7 +55,66 @@ The following is the ordered list of steps and materials required to conduct the
 13. Analysis and classification of the resulting variant calls according to the spectra of base changes within the clones.
 14. Drawing the final analysis based on the base change spectra results in the reproduced figure.
 
-The preprocessed (steps 1-8) WGS data used in this study was uploaded into dbGAP under accession number phs001182.v1.p1 in a BAM format.
+### Data Aquisition and Pre-Processing
+
+The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. 
+
+Unfortunately, the dataset used is 1) not publicly available since the sequencing data are from human subjects which qualifies it is confidential medical data, and 2) it is vastly too large to be uploaded to the GitHub repository, which prevents me to be able to share this data publicly.
+
+In my efforts, I needed to make sure there is enough storage space to hold the data (~400GB) before downloading. I am using University of Iowa's Argon cluster resources for holding and processing the data. To download the data, one must obtain a permission form the authors of the study (I got mine through my PI) and create a unique accession key (.ngc file) by following the steps described [here](https://www.ncbi.nlm.nih.gov/sra/docs/dbgap-cloud-access/).
+
+Since the repository holds all different kinds of data, it is important to download only the data that one needs. The particular datasets (details in table below) can be selected for downloading through the dbGaP web interface which will organize your specific download request into a downloadable cart file (.krt) that will be used later for downloading all datasets at once.
+
+Before downloading, one needs to install software for the linux environment that allows for securly downloading the datasets. After the installation, download the data by using your key and SRA or cart file for prefeching and decryption. Detailed procedure is available [here](https://www.ncbi.nlm.nih.gov/books/NBK36439/#Download.Aspera_Connect). 
+
+Due to the space and time constraints, only the following datasets, collected from one individual, were selected for the further analysis:
+
+| Accession # | Sample Name | Type |
+| --- | --- | --- |
+| SRR4047707 | D1-L-H | Skin, left hip |
+| SRR4047715 | D1-blood | Blood |
+| SRR4047717 | D1-L-F1 | Skin, left forearm |
+| SRR4047722 | D1-R-F | Skin, right forearm |
+| SRR4047723 | D1-R-H1 | Skin, right hip |
+---
+>Detailed procedure for the aquisition of the above datasets is shown below.
+
+Download the latest version of the NCBI SRA Toolkit. Untar or unzip downloaded toolkit file.
+
+```bash
+$ wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.10.9/sratoolkit.2.10.9-ubuntu64.tar.gz
+```
+
+Check the checksum. The output should be ```e21a5ba21196328e7bd1a417055f5b32```
+```bash
+$ md5sum -b sratoolkit.2.10.9-ubuntu64.tar.gz
+```
+
+Before running the download commands below, make sure the dbGaP repository key (.ngc) and the cart files are ready.
+
+Download a fresh dbGaP repository key (.ngc) file and re-config the toolkit with the command below.
+
+```bash
+$ /path-to-your-sratoolkit-installation-dir/bin/vdb-config -i
+```
+From the sratoolkit GUI interface, import the repository key
+Download dbGaP data files
+Run the command below to download the files specified in the cart file.
+```bash
+$ /path-to-your-sratoolkit-installation-dir/bin/prefetch --ngc /path-to-ngc-file-dir/xxxxx.ngc /path-to-your-cart-file/xxxxx.krt
+```
+Please make sure the sratoolkit, ngc, and cart files are on the same disk drive.
+
+The downloaded dbGaP non-SRA files need to be decrypted before use/ Run the command below to decrypt the files.
+```bash
+$ /path-to-your-sratoolkit-installation-dir/bin/vdb-decrypt --ngc /path-to-ngc-file-dir/xxxxx.ngc /path-to-top-level-download-dir/
+```
+
+After downloading and decrypting, the datasets are in the .sra format. To change the format to the bam file run the following command:
+```bash
+$ sam-dump SRRnumber | samtools view -bS - > SRRnumber.bam
+```
+
 
 ---
 ## Results
