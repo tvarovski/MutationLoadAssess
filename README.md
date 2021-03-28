@@ -74,6 +74,7 @@ Due to the space and time constraints, only the following datasets, collected fr
 | SRR4047717 | D1-L-F1 | Skin, left forearm |
 | SRR4047722 | D1-R-F | Skin, right forearm |
 | SRR4047723 | D1-R-H1 | Skin, right hip |
+
 ---
 >Detailed procedure for the aquisition of the above datasets is shown below.
 
