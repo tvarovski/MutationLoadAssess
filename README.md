@@ -114,6 +114,25 @@ After downloading and decrypting, the datasets are in the .sra format. To change
 $ sam-dump SRRnumber | samtools view -bS - > SRRnumber.bam
 ```
 
+Downloading the reference genome
+```bash
+$ wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
+$ gunzip hg19.fa.gz
+```
+Creating an index file
+```bash
+$ samtools indx hg19.fa
+```
+
+Creating a dictionary file
+```bash
+$ java -jar picard.jar CreateSequenceDictionary \ 
+      R=reference.fasta \ 
+      O=reference.dict
+```
+
+
+
 ---
 ## Results
 
