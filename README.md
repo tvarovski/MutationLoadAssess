@@ -121,7 +121,7 @@ $ gunzip hg19.fa.gz
 ```
 Creating an index file
 ```bash
-$ samtools indx hg19.fa
+$ samtools faidx hg19.fa
 ```
 
 Creating a dictionary file
@@ -130,7 +130,10 @@ $ java -jar picard.jar CreateSequenceDictionary \
       R=reference.fasta \ 
       O=reference.dict
 ```
-
+Indexing Samples
+```bash
+$ samtools index SampleName.bam
+```
 
 
 ---
