@@ -114,21 +114,18 @@ After downloading and decrypting, the datasets are in the .sra format. To change
 $ sam-dump SRRnumber | samtools view -bS - > SRRnumber.bam
 ```
 
-Downloading the reference genome
+#### Reference Genome
+The reference genome can be aquired by downloading it using the command below
 ```bash
 $ wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
 $ gunzip hg19.fa.gz
 ```
-Creating an index file
+Next, the reference genome needs to be indexed using samtools[http://www.htslib.org/] and dictionary needs to be created by using PicardTools[https://broadinstitute.github.io/picard/]
 ```bash
 $ samtools faidx hg19.fa
 ```
-
-Creating a dictionary file
 ```bash
-$ java -jar picard.jar CreateSequenceDictionary \ 
-      R=reference.fasta \ 
-      O=reference.dict
+$ java -jar picard.jar CreateSequenceDictionary R=hg19.fa O=hg19.dict
 ```
 Indexing Samples
 ```bash
