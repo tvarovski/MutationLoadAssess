@@ -120,18 +120,34 @@ The reference genome can be aquired by downloading it using the command below
 $ wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
 $ gunzip hg19.fa.gz
 ```
-Next, the reference genome needs to be indexed using samtools[http://www.htslib.org/] and dictionary needs to be created by using PicardTools[https://broadinstitute.github.io/picard/]
+Next, the reference genome needs to be indexed using [samtools](http://www.htslib.org/) and dictionary needs to be created by using [PicardTools](https://broadinstitute.github.io/picard/)
 ```bash
 $ samtools faidx hg19.fa
 ```
 ```bash
 $ java -jar picard.jar CreateSequenceDictionary R=hg19.fa O=hg19.dict
 ```
-Indexing Samples
+#### Indexing Samples
+Before the samples can be used by GATK they must be indexed as well. To do that you can use samtools as well.
 ```bash
 $ samtools index SampleName.bam
 ```
+To save time you can also use multi-threaded processing.
+```bash
+$ samtools index -@ <number_of_threads> SampleName.bam
+```
+## Variant Detection
+For finding somatic variants, GATK v4.1.8.1 and Picard 2.23.0 was used.
 
+### Mutect2 Filtering
+To run the Mutect2 variant detection program, first one needs to find the `<matched_blood_sample_name>` and `<fibroblast_sample_name>`. These can be extracted from the BAM read group headers by using the following command:
+```bash
+$ gatk GetSampleName -I <input.bam> -O <output.txt>
+$ cat output.txt
+```
+```bash
+$ gatk Mutect2 -R <reference_genome> -I <fibroblast_sample> -I <matched_blood_sample> -normal <matched_blood_sample_name> -tumor <fibroblast_sample_name> -O outputname.vfc.gz
+```
 
 ---
 ## Results
