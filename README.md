@@ -190,7 +190,7 @@ Now, to convert a file from VCF to CSV a following code snippet should suffice:
 import allel
 allel.vcf_to_csv('example.vcf', 'example.csv', fields=['CHROM', 'POS', 'DP', 'REF', 'ALT', 'QUAL'])
 ```
-Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the VCF file encoding standards.
+Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the [VCF file encoding standards](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
 ### Putting Everything Together.
 To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository attached Jupyter Notebook file.
