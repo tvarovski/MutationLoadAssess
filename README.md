@@ -139,15 +139,33 @@ $ samtools index -@ <number_of_threads> SampleName.bam
 ## Variant Detection
 For finding somatic variants, GATK v4.1.8.1 and Picard 2.23.0 was used.
 
-### Mutect2 Filtering
+### Mutect2
 To run the Mutect2 variant detection program, first one needs to find the `<matched_blood_sample_name>` and `<fibroblast_sample_name>`. These can be extracted from the BAM read group headers by using the following command:
 ```bash
 $ gatk GetSampleName -I <input.bam> -O <output.txt>
 $ cat output.txt
 ```
 ```bash
-$ gatk Mutect2 -R <reference_genome> -I <fibroblast_sample> -I <matched_blood_sample> -normal <matched_blood_sample_name> -tumor <fibroblast_sample_name> -O outputname.vfc.gz
+$ gatk Mutect2 -R <reference_genome> \
+    -I <fibroblast_sample> \
+    -I <matched_blood_sample> \
+    -normal <matched_blood_sample_name> \
+    -tumor <fibroblast_sample_name> \
+    -O <outputname_name.vfc.gz>
 ```
+
+### Haplotype Caller
+I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run one can use the command below:
+
+```bash
+$ gatk HaplotypeCallerSpark  \
+   -R <reference_genome> \
+   -I <sample_name> \
+   -O <output_name.vcf.gz>
+```
+
+### Varscan2
+This program is somewhat problematic...
 
 ---
 ## Results
