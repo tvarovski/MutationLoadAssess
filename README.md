@@ -176,11 +176,24 @@ gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
 ### Varscan2
 This program is somewhat problematic. It requires a use of `samtools mpileup` to create a mpileup file. This step takes a really long time and creates enormous in size files... Next these file need to be piped into varscan's `mpileup2snp` for variant calling. I have not been able to perform this step yet.
 
+
+## Removing Common Variants
+Common variants between all three callers need to be removed and then filtered based on the various quality metrics. To do that I decided to write my own program as I didn't see anything that would satisfy the needs of this project. The first step is to standardize all of the outputs from the callers into a simple table.
+
 ### Dealing With [Variant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format) (VCF) Files
-The outputs of the above programs are in a VCF format, format that is quite difficult to work with as the columns are not always of a standard input. Therefore, I want to convert the VCF files into a CSV file that will be much easier to use during the filtering. To do that I've found a relevant python library with bioinformatics tools called `scikit-allel` that seems to be able to convert VCF files to CSV format. To aquire the library on a linux machine alongside with all of the required dependencies for full functionality type:
+The outputs of the above variatnt calling programs are in a VCF format, format that is quite difficult to work with as the columns are not always of a standard input. Therefore, I want to convert the VCF files into a CSV file that will be much easier to use during the filtering. To do that I've found a relevant python library with bioinformatics tools called `scikit-allel` that seems to be able to convert VCF files to CSV format. To aquire the library on a linux machine alongside with all of the required dependencies for full functionality type:
 ```bash
 $ pip install scikit-allel[full]
 ```
+Now, to convert a file from VCF to CSV a following code snippet should suffice:
+```python
+import allel
+allel.vcf_to_csv('example.vcf', 'example.csv', fields=['CHROM', 'POS', 'DP', 'REF', 'ALT', 'QUAL'])
+```
+Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the VCF file encoding standards.
+
+### Putting Everything Together.
+To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository attached Jupyter Notebook file.
 
 ---
 ## Results
