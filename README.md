@@ -155,13 +155,22 @@ $ gatk Mutect2 -R <reference_genome> \
 ```
 
 ### Haplotype Caller
-I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run one can use the command below:
+First, I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run, one can use the command below:
 
 ```bash
 $ gatk HaplotypeCallerSpark  \
    -R <reference_genome> \
    -I <sample_name> \
    -O <output_name.vcf.gz>
+```
+
+Unfortunately, this method didn't work for me on the argon cluster. Instead I used the production version of HaplotypeCaller:
+
+```bash
+gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
+   -R $REFERENCE \
+   -I $SAMPLE \
+   -O $OUTPUT
 ```
 
 ### Varscan2
