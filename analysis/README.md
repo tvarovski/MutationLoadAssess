@@ -1,8 +1,4 @@
-# Introduction to Scientific Computing Project Goals
-
-In this project I want to focus on developing a way to capture *de novo* mutations within individual genomes in populations of cells. The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells) that I eventually want to use for analysis of WGS data from human cell cultures that were subjected to different mutagenic treatments (e.g. hydroxyurea, mitomycin C) to directly study their effects in various mutant backgrounds.
-
----
+# Data Analysis
 
 ## Figure to Reproduce:
 ![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
@@ -13,49 +9,71 @@ In this project I want to focus on developing a way to capture *de novo* mutatio
 
 ---
 
-## Materials And Methods For Figure Reproduction:
+## Variant Detection
+For finding somatic variants, GATK v4.1.8.1 and Picard 2.23.0 was used.
 
-1. Skin fibroblast biopsy taken from a healthy individual.
-2. Isolation of a single fibroblast cell.
-3. Cell culture growth of single-cell derived lineages.
-4. DNA extraction from the clonal cells and blood (control), and sequencing.
-5. Sequencing read quality assessment and filtering.
-6. Read alignment to the reference [human genome (GRCh37)](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13/) using [BWA-MEM-0.7.10](https://sourceforge.net/projects/bio-bwa/files/).
-7. Deduplication of reads by using [Picard Tools](https://broadinstitute.github.io/picard/) MarkDuplicates.
-8. BAM files processed according to the [Genome Analysis Toolkit (GATK)](https://gatk.broadinstitute.org/hc/en-us) [best practices pipeline](https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows).
-9. SNVs were called by using three independent tools (only variants common between all three were considered): haplotype caller from [GATK](https://gatk.broadinstitute.org/hc/en-us), [VarScan2](https://github.com/dkoboldt/varscan) and [MuTect](https://github.com/broadinstitute/mutect). Variant calling was limited to genomic regions with 10X+ coverage with 3+ reads supporting the call. 
-10. Only the SNVs that were present in fibroblasts but not blood (within individual) were called as somatic.
-11. Known dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)) and known simple repeat regions (UCSC Genome Browser, [hg19 build](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13/)) were removed from the variant list.
-12. Variant calls with allelic frequencies different than 45-55% (heterozygous) and 90%+ (homozygous) were discarted.
-13. Resulting calls were analysed and classified according to the spectra of base changes within the clones resulting in the figure 3-B below.
+### Mutect2
+To run the Mutect2 variant detection program, first one needs to find the `<matched_blood_sample_name>` and `<fibroblast_sample_name>`. These can be extracted from the BAM read group headers by using the following command:
+```bash
+$ gatk GetSampleName -I <input.bam> -O <output.txt>
+$ cat output.txt
+```
+```bash
+$ gatk Mutect2 -R <reference_genome> \
+    -I <fibroblast_sample> \
+    -I <matched_blood_sample> \
+    -normal <matched_blood_sample_name> \
+    -tumor <fibroblast_sample_name> \
+    -O <outputname_name.vfc.gz>
+```
+
+### Haplotype Caller
+First, I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run, one can use the command below:
+
+```bash
+$ gatk HaplotypeCallerSpark  \
+   -R <reference_genome> \
+   -I <sample_name> \
+   -O <output_name.vcf.gz>
+```
+
+Unfortunately, this method didn't work for me on the argon cluster. Instead I used the production version of HaplotypeCaller:
+
+```bash
+gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
+   -R $REFERENCE \
+   -I $SAMPLE \
+   -O $OUTPUT
+```
+
+### Varscan2
+This program is somewhat problematic. It requires a use of `samtools mpileup` to create a mpileup file. This step takes a really long time and creates enormous in size files... Next these file need to be piped into varscan's `mpileup2snp` for variant calling. I have not been able to perform this step yet.
 
 
-#### Research Article Reference #1
+## Removing Common Variants
+Common variants between all three callers need to be removed and then filtered based on the various quality metrics. To do that I decided to write my own program as I didn't see anything that would satisfy the needs of this project. The first step is to standardize all of the outputs from the callers into a simple table.
 
->Natalie Saini, Steven A. Roberts,Leszek J. Klimczak, Kin Chan, Sara A. Grimm, Shuangshuang Dai, David C. Fargo, Jayne C. Boyer, William K. Kaufmann, Jack A. Taylor, Eunjung Lee,Isidro Cortes-Ciriano, Peter J. Park, Shepherd H. Schurman, Ewa P. Malc, Piotr A. Mieczkowski, Dmitry A. Gordenin, "[The Impact of Environmental and Endogenous Damage on Somatic Mutation Load in Human Skin Fibroblasts](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006385)", *PLOS Genetics* October 27, 2016
+### Dealing With [Variant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format) (VCF) Files
+The outputs of the above variatnt calling programs are in a VCF format, format that is quite difficult to work with as the columns are not always of a standard input. Therefore, I want to convert the VCF files into a CSV file that will be much easier to use during the filtering. To do that I've found a relevant python library with bioinformatics tools called `scikit-allel` that seems to be able to convert VCF files to CSV format. To aquire the library on a linux machine alongside with all of the required dependencies for full functionality type:
+```bash
+$ pip install scikit-allel[full]
+```
+Now, to convert a file from VCF to CSV a following code snippet should suffice:
+```python
+import allel
+allel.vcf_to_csv('example.vcf', 'example.csv', fields=['CHROM', 'POS', 'DP', 'REF', 'ALT', 'QUAL'])
+```
+Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the [VCF file encoding standards](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
-Cancer and aging are believed to arise through mutations within the genomes. These genetic changes constantly arise within the somatic cells during the individuals lifespan and can be caused by both endogenous and exogenous factors. The authors of this study proposed a way to examine the link between UV exposure and mutation within genomes of single cells (human skin fibroblasts) of health individuals. This analysis was enabled by the specific mutatation signuture of UV-induced DNA damage which results in C→T changes and CpC→TpT dinucleotide changes. The authors of the study observed higher rates of these signatures within individuals in fibroblasts taken from forearm as compared to the hip.
+### Plotting The Data
 
-#### Research Article Reference #2
+The resulting datasets will be combined into one table with additional column containing the sample information. Such table can be used for making the final figure.
 
->Natalie Saini, Camille K. Giacobone, Leszek J. Klimczak, Brian N. Papas, Adam B. Burkholder, Jian-Liang Li, David C. Fargo, Re Bai, Kevin Gerrish, Cynthia L. Innes, Shepherd H. Schurman, Dmitry A. Gordenin, "[UV-exposure, endogenous DNA damage, and DNA replication errors shape the spectra of genome changes in human skin](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1009302)", *PLOS Genetics* January 14, 2021
+I imagine the final table to have the following structure:
 
-The second, more recent paper exands on the paper above and examines more individuals from more diverse backgrounds among 21 healthy volunteers, ranging in ages from 25 to 79 years. The authors didn't find a connection between the age and sex of the donor, however, the skin cells from Black individuals had a lower median mutation load by ~2.5x compared to the skin cells from White individuals. This difference was attributed to the difference in UV-induced mutation signatures which suggests that melanin is protective against UV DNA damage.
+| Sample | chromosome | position | reference_allele | sample_allele |
+| --- | --- | --- | --- | --- |
+| SRR4047707 | chr1 | 10133 | A | T |
 
----
-
-## Results
-
-To be updated when the project results are available
-
----
-
-## Discussion
-
-To be updated when the project results are available
-
----
-
-## Conclusions
-
-To be updated when the project results are available
+### Putting Everything Together.
+To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository attached Jupyter Notebook file.
