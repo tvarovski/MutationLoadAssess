@@ -165,7 +165,7 @@ Next, I exported the table into a TSV file. This was done by using another GATK 
 
 Needless to say, I had my owns struggles to understand how this file format follows logic.
 
-To convert to a table:
+Options are available to select particular fields for analysis. I stuck with `CHROM`, `TYPE`, `REF`, `ALT`, `AD`, `AF`. To convert to a table:
 
 ```bash
 $ gunzip <input.vcf.gz>
