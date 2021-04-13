@@ -235,6 +235,26 @@ To make make all of the filtering I am using a [PySpark](https://spark.apache.or
 Preliminary Results from Mutect2 analysis follow the expectations.
 ![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
 
+| Sample_Name |	Substitution_Type | Events |
+| --- | --- | --- |
+| D1-R-F |C to T | 502 |
+| D1-R-F | C to A | 239 |
+| D1-R-F | C to G | 82 |
+| D1-R-F | T to C | 231 |
+| D1-R-F | T to G | 100 |
+| D1-R-F | T to A | 135 |
+| D1-R-H1 | C to T | 706 |
+| D1-R-H1 | C to A | 137 |
+| D1-R-H1 | C to G | 72 |
+| D1-R-H1 | T to C | 181 |
+| D1-R-H1 | T to G | 76 |
+| D1-R-H1 | T to A | 88 |
+
+| Sample_Name | Total_SNPs |
+| --- | --- |
+| D1-R-F | 1289 |
+| D1-R-H1 | 1260 |
+
 ---
 ## Discussion
 
