@@ -1,8 +1,4 @@
-# Introduction to Scientific Computing Project Goals
-
-In this project I want to focus on developing a way to capture *de novo* mutations within individual genomes in populations of cells. The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells) that I eventually want to use for analysis of WGS data from human cell cultures that were subjected to different mutagenic treatments (e.g. hydroxyurea, mitomycin C) to directly study their effects in various mutant backgrounds.
-
----
+# Data
 
 ## Figure to Reproduce:
 ![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
@@ -29,33 +25,91 @@ In this project I want to focus on developing a way to capture *de novo* mutatio
 12. Variant calls with allelic frequencies different than 45-55% (heterozygous) and 90%+ (homozygous) were discarted.
 13. Resulting calls were analysed and classified according to the spectra of base changes within the clones resulting in the figure 3-B below.
 
-
-#### Research Article Reference #1
-
->Natalie Saini, Steven A. Roberts,Leszek J. Klimczak, Kin Chan, Sara A. Grimm, Shuangshuang Dai, David C. Fargo, Jayne C. Boyer, William K. Kaufmann, Jack A. Taylor, Eunjung Lee,Isidro Cortes-Ciriano, Peter J. Park, Shepherd H. Schurman, Ewa P. Malc, Piotr A. Mieczkowski, Dmitry A. Gordenin, "[The Impact of Environmental and Endogenous Damage on Somatic Mutation Load in Human Skin Fibroblasts](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006385)", *PLOS Genetics* October 27, 2016
-
-Cancer and aging are believed to arise through mutations within the genomes. These genetic changes constantly arise within the somatic cells during the individuals lifespan and can be caused by both endogenous and exogenous factors. The authors of this study proposed a way to examine the link between UV exposure and mutation within genomes of single cells (human skin fibroblasts) of health individuals. This analysis was enabled by the specific mutatation signuture of UV-induced DNA damage which results in C→T changes and CpC→TpT dinucleotide changes. The authors of the study observed higher rates of these signatures within individuals in fibroblasts taken from forearm as compared to the hip.
-
-#### Research Article Reference #2
-
->Natalie Saini, Camille K. Giacobone, Leszek J. Klimczak, Brian N. Papas, Adam B. Burkholder, Jian-Liang Li, David C. Fargo, Re Bai, Kevin Gerrish, Cynthia L. Innes, Shepherd H. Schurman, Dmitry A. Gordenin, "[UV-exposure, endogenous DNA damage, and DNA replication errors shape the spectra of genome changes in human skin](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1009302)", *PLOS Genetics* January 14, 2021
-
-The second, more recent paper exands on the paper above and examines more individuals from more diverse backgrounds among 21 healthy volunteers, ranging in ages from 25 to 79 years. The authors didn't find a connection between the age and sex of the donor, however, the skin cells from Black individuals had a lower median mutation load by ~2.5x compared to the skin cells from White individuals. This difference was attributed to the difference in UV-induced mutation signatures which suggests that melanin is protective against UV DNA damage.
-
----
-
-## Results
-
 To be updated when the project results are available
 
 ---
 
-## Discussion
+### Data Aquisition and Pre-Processing
 
-To be updated when the project results are available
+The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. 
+
+Unfortunately, the dataset used is 1) not publicly available since the sequencing data are from human subjects which qualifies it is confidential medical data, and 2) it is vastly too large to be uploaded to the GitHub repository, which prevents me to be able to share this data publicly.
+
+In my efforts, I needed to make sure there is enough storage space to hold the data (~400GB) before downloading. I am using University of Iowa's Argon cluster resources for holding and processing the data. To download the data, one must obtain a permission form the authors of the study (I got mine through my PI) and create a unique accession key (.ngc file) by following the steps described [here](https://www.ncbi.nlm.nih.gov/sra/docs/dbgap-cloud-access/).
+
+Since the repository holds all different kinds of data, it is important to download only the data that one needs. The particular datasets (details in table below) can be selected for downloading through the dbGaP web interface which will organize your specific download request into a downloadable cart file (.krt) that will be used later for downloading all datasets at once.
+
+Before downloading, one needs to install software for the linux environment that allows for securly downloading the datasets. After the installation, download the data by using your key and SRA or cart file for prefeching and decryption. Detailed procedure is available [here](https://www.ncbi.nlm.nih.gov/books/NBK36439/#Download.Aspera_Connect). 
+
+Due to the space and time constraints, only the following datasets, collected from one individual, were selected for the further analysis:
+
+| Accession # | Sample Name | Type |
+| --- | --- | --- |
+| SRR4047707 | D1-L-H | Skin, left hip |
+| SRR4047715 | D1-blood | Blood |
+| SRR4047717 | D1-L-F1 | Skin, left forearm |
+| SRR4047722 | D1-R-F | Skin, right forearm |
+| SRR4047723 | D1-R-H1 | Skin, right hip |
 
 ---
 
-## Conclusions
+>Detailed procedure for the aquisition of the above datasets is shown below.
 
-To be updated when the project results are available
+Download the latest version of the NCBI SRA Toolkit. Untar or unzip downloaded toolkit file.
+
+```bash
+$ wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.10.9/sratoolkit.2.10.9-ubuntu64.tar.gz
+```
+
+Check the checksum. The output should be ```e21a5ba21196328e7bd1a417055f5b32```
+```bash
+$ md5sum -b sratoolkit.2.10.9-ubuntu64.tar.gz
+```
+
+Before running the download commands below, make sure the dbGaP repository key (.ngc) and the cart files are ready.
+
+Download a fresh dbGaP repository key (.ngc) file and re-config the toolkit with the command below.
+
+```bash
+$ /path-to-your-sratoolkit-installation-dir/bin/vdb-config -i
+```
+From the sratoolkit GUI interface, import the repository key
+Download dbGaP data files
+Run the command below to download the files specified in the cart file.
+```bash
+$ /path-to-your-sratoolkit-installation-dir/bin/prefetch --ngc /path-to-ngc-file-dir/xxxxx.ngc /path-to-your-cart-file/xxxxx.krt
+```
+Please make sure the sratoolkit, ngc, and cart files are on the same disk drive.
+
+The downloaded dbGaP non-SRA files need to be decrypted before use/ Run the command below to decrypt the files.
+```bash
+$ /path-to-your-sratoolkit-installation-dir/bin/vdb-decrypt --ngc /path-to-ngc-file-dir/xxxxx.ngc /path-to-top-level-download-dir/
+```
+
+After downloading and decrypting, the datasets are in the .sra format. To change the format to the bam file run the following command:
+```bash
+$ sam-dump SRRnumber | samtools view -bS - > SRRnumber.bam
+```
+
+#### Reference Genome
+The reference genome can be aquired by downloading it using the command below
+```bash
+$ wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
+$ gunzip hg19.fa.gz
+```
+Next, the reference genome needs to be indexed using [samtools](http://www.htslib.org/) and dictionary needs to be created by using [PicardTools](https://broadinstitute.github.io/picard/)
+```bash
+$ samtools faidx hg19.fa
+```
+```bash
+$ java -jar picard.jar CreateSequenceDictionary R=hg19.fa O=hg19.dict
+```
+#### Indexing Samples
+Before the samples can be used by GATK they must be indexed as well. To do that you can use samtools as well.
+```bash
+$ samtools index SampleName.bam
+```
+To save time you can also use multi-threaded processing.
+```bash
+$ samtools index -@ <number_of_threads> SampleName.bam
+```
