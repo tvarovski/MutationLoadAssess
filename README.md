@@ -227,7 +227,7 @@ The final table has the following structure:
 | SRR4047707 | C to T | 107 |
 
 ### Putting Everything Together.
-To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository attached Jupyter Notebook file.
+To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository-attached [Jupyter Notebook file](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/data_parser.ipynb).
 
 ---
 ## Results
