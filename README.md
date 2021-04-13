@@ -192,6 +192,16 @@ allel.vcf_to_csv('example.vcf', 'example.csv', fields=['CHROM', 'POS', 'DP', 'RE
 ```
 Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the [VCF file encoding standards](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
+### Plotting The Data
+
+The resulting datasets will be combined into one table with additional column containing the sample information. Such table can be used for making the final figure.
+
+I imagine the final table to have the following structure:
+
+| Sample | chromosome | position | reference_allele | sample_allele |
+| --- | --- | --- | --- | --- |
+| SRR4047707 | chr1 | 10133 | A | T |
+
 ### Putting Everything Together.
 To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository attached Jupyter Notebook file.
 
