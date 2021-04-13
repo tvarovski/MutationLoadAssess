@@ -232,12 +232,13 @@ To make make all of the filtering I am using a [PySpark](https://spark.apache.or
 ---
 ## Results
 
-To be updated when the project results are available
+Preliminary Results from Mutect2 analysis follow the expectations.
+![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
 
 ---
 ## Discussion
 
-To be updated when the project results are available
+To be updated when available.
 
 ---
 ## Unexpected Contingencies
