@@ -154,6 +154,30 @@ $ gatk Mutect2 -R <reference_genome> \
     -O <outputname_name.vfc.gz>
 ```
 
+After the variant detection has finished (this takes a long time) it is needed to filter the calls based on probability. I used default settings. To do that the following command was used:
+
+```bash
+$ gatk FilterMutectCalls \
+   -V <input.vcf.gz> \
+   -O <output.filtered.vcf.gz>
+```
+Next, I exported the table into a TSV file. This was done by using another GATK program by taking the official GATK advice: "No, really, do not write your own parser if you can avoid it. This is not a comment on how smart or how competent we think you are -- it is a comment on how annoyingly obtuse and convoluted the VCF format is.", and "Why are we sticking with it [VCF format] anyway? Because, as Winston Churchill famously put it, VCF is the worst variant call representation, except for all the others."
+
+Needless to say, I had my owns struggles to understand how this file format follows logic.
+
+To convert to a table:
+
+```bash
+$ gunzip <input.vcf.gz>
+
+$ gatk VariantsToTable \
+     -V <input.vcf> \
+     -F CHROM -F POS -F TYPE -F REF -F ALT -GF AD -GF AF \
+     -O <oOutput.tsv>
+```
+
+Then I downloaded the resulting table files and used them for further filtering and analysis with my custom python script / Jupyter Notebook.
+
 ### Haplotype Caller
 First, I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run, one can use the command below:
 
@@ -167,7 +191,7 @@ $ gatk HaplotypeCallerSpark  \
 Unfortunately, this method didn't work for me on the argon cluster. Instead I used the production version of HaplotypeCaller:
 
 ```bash
-gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
+$ gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
    -R $REFERENCE \
    -I $SAMPLE \
    -O $OUTPUT
@@ -194,13 +218,13 @@ Where `fields` are names of the relevant positional and quality metrics for the 
 
 ### Plotting The Data
 
-The resulting datasets will be combined into one table with additional column containing the sample information. Such table can be used for making the final figure.
+The resulting datasets are then combined into one table with additional column containing the sample information. Such table can be used for making the final figure (stacked 100% percent bar chart) in MS Excel,
 
-I imagine the final table to have the following structure:
+The final table has the following structure:
 
-| Sample | chromosome | position | reference_allele | sample_allele |
-| --- | --- | --- | --- | --- |
-| SRR4047707 | chr1 | 10133 | A | T |
+| Sample | Substitution Class | Number of SNPs |
+| --- | --- | --- | 
+| SRR4047707 | C to T | 107 |
 
 ### Putting Everything Together.
 To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository attached Jupyter Notebook file.
