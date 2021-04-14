@@ -195,6 +195,8 @@ $ gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
    -O $OUTPUT
 ```
 
+HaplotypeCaller doesn't have a functionality of filtering variants from a matched normal like Mutect2 does therefore I will be writing custom python code to resolve this. Additionally, HaplotypeCaller's output (GVCF) is different from Mutect2 (VCF), so I need to find out how to use the GVCF format and how to call/filter variants based on this output file.
+
 ### Varscan2
 This program is somewhat problematic. It requires a use of `samtools mpileup` to create a mpileup file. This step takes a really long time and creates enormous in size files... Next these file need to be piped into varscan's `mpileup2snp` for variant calling. I have not been able to perform this step yet.
 
