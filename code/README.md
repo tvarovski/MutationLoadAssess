@@ -19,6 +19,7 @@
 | [haplotype.sh](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/haplotype.sh) | Takes a bam file and a reference genome and runs production version of the Haplotype Caller. Returns a .vcf.gz output file |
 | [haplotypeSpark.sh](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/haplotypeSpark.sh) | Takes a bam file and a reference genome and runs beta version of the Spark Haplotype Caller. Doesn't function in my environment. Returns a .vcf.gz output file |
 | [indexBamFile.sh](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/indexBamFile.sh) | Indexes a bamfile using multithreading. User can Specify number of threads to be used.
-| filterMT2calls.sh | Used for filtering the output of the Mutect2 caller |
-| vcf_toTable.sh | Used for converting the standard vcf output of the filterMT2calls.sh script to a table that can be parsed by my Jupyter Notebook program |
+| [filterMT2calls.sh](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/filterMT2calls.sh) | Used for filtering the output of the Mutect2 caller |
+| [vcf_toTable.sh](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/vcf_toTable.sh) | Used for converting the standard vcf output of the filterMT2calls.sh script to a table that can be parsed by my Jupyter Notebook program |
+| [data_parser.ipynb](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/data_parser.ipynb) | This is a Jupyter Notebook that includes all pyton code used for analysis of data from different variant callers.|
 
