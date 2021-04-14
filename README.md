@@ -2,19 +2,17 @@
 
 ## Introduction
 
-Genomic mutations are believed to be one of the main contributing factors implicated in cancer and aging. These genetic changes constantly arise within the somatic cells during the lifespan and can be caused by both endogenous and exogenous mutagenic factors. The ability to find such newly arising mutations from lineage-inherited variants is a critical step for linking the potential mutagenic factors with the change in somatic mutation rates. In this project, I want to focus on replicating a way of finding these *de novo* mutations that can be captured within individual genomes by sequencing DNA from single-cell-derived, clonal populations of cells.
+*In vivo* DNA is under a constant stress of endogenous and exogenous damaging factors that can lead to changes in the genetic sequence and genome instability, that in somatic cells, are implicated in cancer and aging. However, the factors and the mechanistic role they play in causing mutations is not well understood and the ability to find and characterisze such events is a critical step for linking the potential effects of the mutagenic factors with changes in somatic cells on a genetic sequence level. The authors of the study that I want to replicate proposed a way to examine the link between UV exposure, known DNA damaging agent, and mutation within genomes of single cells (human skin fibroblasts) of healthy individuals. UV-induced DNA damage results in C→T changes and CpC→TpT dinucleotide changes, which can be used as a marker for the UV exposure. The authors of the study observed higher rates of such signatures in fibroblasts biopsied from forearm as compared to the hip of individual donors. The difference can be explained by the observation that skin around the hip is generally more protected from the UV by clothing, as compared to the skin on the forearm which is more exposed. 
 
-The research articles linked and described below examine one possible strategy for finding new mutations arising within single genomes (cells), by creating fibroblast-derived clonal cell lineages and comparing their WGS mutational signature with the donor's blood sample. Since skin and blood have the same embryonic origin, comparing genomes of these two tissues to one another allows for capturing the genetic changes that have been acquired throughout the life of the individual, that occured after the developmental divergence of the two tissues (for example UV damage).
+Natalie Saini and her collaborators propose a strategy for finding and characterising *de novo* mutations arising within single genomes (cells), by creating fibroblast-derived clonal cell lineages and comparing their WGS mutational signature with the donor's blood sample. Since skin and blood have the same embryonic origin, comparing genomes of these two tissues and removing variants common between them allows for capturing the genetic changes that have been acquired after the developmental divergence of the two tissues, changes that have been accumulating throughout the life of the individual and have occured by the means of UV damage.
 
-A similar method can be employed for the study of the impact of different mutagenic treatments (e.g. hydroxyurea, mitomycin-C, ionizing radiation) to directly study their effects in various mutant backgrounds by the analysis of WGS data from treated, subclonal human cell cultures. I am particularly interested in studying the mutagenic effects of such treatments in knockout mutants of genes involved in the DNA repair mechanisms which would be my future direction if I can replicate the outcomes of the original studies.
+A similar method can be employed for the study of the impacts of other mutagenic treatments (e.g. hydroxyurea, mitomycin-C, ionizing radiation) to directly study their effects in various mutant backgrounds of subclonal human cell cultures by compairson of WGS data from treated and control populations of cells. Since single cell WGS is expensive, single-cell-derived clonal populations of treated and control cells can be used. I am particularly interested in studying the mutagenic effects of such treatments in knockout mutants of genes involved in the DNA repair mechanisms which would be my future direction if I can replicate the outcomes of the original studies.
 
 ---
 ### Project Reference Articles
-This project is based on techniques and methods described in the two seminal research projects conducted under the leadership of Natalie Saini linked and briefly described below.
+This project is based on techniques and methods described in the two seminal research projects conducted under the leadership of Natalie Saini.
 
-The authors of the first study proposed a way to examine the link between UV exposure and mutation within genomes of single cells (human skin fibroblasts) of healthy individuals. This analysis was enabled by the specific mutatation signuture of UV-induced DNA damage which results in C→T changes and CpC→TpT dinucleotide changes. The authors of the study observed higher rates of these signatures within individuals in fibroblasts taken from forearm as compared to the hip.
-
-The second, more recent paper expands on the paper above by using the same methods and examines more individuals from more diverse backgrounds, among 21 healthy volunteers, ranging in ages from 25 to 79 years. The authors didn't find a connection between the age and sex of the donor, however, skin cells from darker-skined individuals had a lower median mutation load by ~2.5x compared to the skin cells from lighter-skinned individuals. This difference was attributed to the difference in UV-induced mutation signatures which suggests that melanin is protective against UV DNA damage.
+Similarily to the first paper that I briefly described in the introduction and by using the same methods, the second article examines more individuals from more diverse backgrounds, among 21 healthy volunteers, ranging in ages from 25 to 79 years. The authors didn't find a connection between the age and sex of the donor, however, skin cells from darker-skined individuals had a lower median mutation load by ~2.5x compared to the skin cells from lighter-skinned individuals. This difference was attributed to the difference in UV-induced mutation signatures which suggests that melanin is protective against UV DNA damage.
 
 [**Research Article Reference #1**](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/references/Research%20Article%201.pdf)
 >Natalie Saini, Steven A. Roberts,Leszek J. Klimczak, Kin Chan, Sara A. Grimm, Shuangshuang Dai, David C. Fargo, Jayne C. Boyer, William K. Kaufmann, Jack A. Taylor, Eunjung Lee,Isidro Cortes-Ciriano, Peter J. Park, Shepherd H. Schurman, Ewa P. Malc, Piotr A. Mieczkowski, Dmitry A. Gordenin, "[The Impact of Environmental and Endogenous Damage on Somatic Mutation Load in Human Skin Fibroblasts](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006385)", *PLOS Genetics* October 27, 2016
@@ -218,13 +216,7 @@ Where `fields` are names of the relevant positional and quality metrics for the 
 
 ### Plotting The Data
 
-The resulting datasets are then combined into one table with additional column containing the sample information. Such table can be used for making the final figure (stacked 100% percent bar chart) in MS Excel,
-
-The final table has the following structure:
-
-| Sample | Substitution Class | Number of SNPs |
-| --- | --- | --- | 
-| SRR4047707 | C to T | 107 |
+The resulting datasets are then combined into one table with additional column containing the sample information. Such table can be used for making the final figure (stacked 100% percent bar chart) in MS Excel.
 
 ### Putting Everything Together.
 To make make all of the filtering I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository-attached [Jupyter Notebook file](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/data_parser.ipynb).
@@ -232,8 +224,11 @@ To make make all of the filtering I am using a [PySpark](https://spark.apache.or
 ---
 ## Results
 
-Preliminary Results from Mutect2 analysis follow the expectations.
+Preliminary Results from Mutect2 analysis follow the expectations with C->T mutations constituting the majority of the new variants. Interestingly, in corcordance with the results described by the research article #2 there seems to be no corellation between the location of the biopsied sample and observed signature which suggests that the even a short exposure intervals can have a measurable outcome. 
+
 ![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
+
+Preliminary summary of the mutation spectra:
 
 | Sample_Name |	Substitution_Type | Events |
 | --- | --- | --- |
@@ -255,12 +250,16 @@ Preliminary Results from Mutect2 analysis follow the expectations.
 | D1-R-F | 1289 |
 | D1-R-H1 | 1260 |
 
+Already seen, some discrepancies are visible. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on.
+
 ---
 ## Discussion
 
-To be updated when available.
+To Be Continued
 
 ---
 ## Unexpected Contingencies
 
 Some challenges I've encountered were mostly centered around how to acquire data in the first place. For one, it is not publicly available so I had to create an account for the database it was held in, I had to be added as a downloader for that study through my PI, I had to download proprietary software for securely downloading the data from the servers (which hasn't been without problems and errors and troubleshooting to get it to work) and later processing. Even before downloading, I wasn't prepared for acquiring 400GB of data, I had to make space for that on my Argon account where I will be continuing the project. After downloading it turned out that the data is in an unfamiliar file format (SRA) which has to be converted to BAM for it to work in bioinformatic pipelines, and it also took me a while to figure out how to do it... Also, working with latge datasets takes proportionately more amount of time for downloading and processingwhich only adds to the frustration when something doesn't work.
+
+More challanges with using the right tool for the job, understanding the different file formats (VCF in particular), figuring out what given options for each program mean and when they are used etc. Unfortunately, none of that is described in the methods sections of my research articles so I have to go by feeling or just sticking with default settings and hoping for the best.
