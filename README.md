@@ -229,7 +229,6 @@ Preliminary Results from Mutect2 analysis follow the expectations with C->T muta
 Preliminary summary of the Mutect Output
 
 ![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
-*Figure Legend:*
 >The spectra of SNP base changes in the clones as preliminairly identified by Mutect2 variant caller. For each base change the reverse complements are also included.
 
 
