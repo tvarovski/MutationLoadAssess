@@ -12,5 +12,5 @@ This project is based on techniques and methods described in the two seminal res
 The following *Figure 3* taken from the `Research Article #1` shows in *A* a mutation load in clones derived from skin fibroblasts biopsied from two individuals (D1 & D2), from either the left (L) or right (R) side of the body, from hip (H) or forearm (F). Each sample shows how many new mutations were aquired throughout the the individual's life in that particular clone, and estimated yearly mutation rate based on the individuals's age. *B*, breaks down the clone-specific mutations by substitution class and shows their relative proportion for each clone. Investigating the changes in the proportion of base changes spectra might give insight into the mechanism by which these mutations were aquired. In this project, I want to reproduce the outcome shown in *Figure 3-B*.
 
 ![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
-*Figure Legend:*
+
 >The number of somatic mutations detected in each clone and the rate of accumulation of mutations per year are provided. (B) The spectra of base changes in the clones. For each base change the reverse complements are also included.
