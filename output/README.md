@@ -19,5 +19,5 @@
 10. Only the SNVs that were present in fibroblasts but not blood (within individual) were called as somatic.
 11. Known dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)) and known simple repeat regions (UCSC Genome Browser, [hg19 build](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13/)) were removed from the variant list.
 12. Variant calls with allelic frequencies different than 45-55% (heterozygous) and 90%+ (homozygous) were discarted.
-13. Resulting calls were analysed and classified according to the spectra of base changes within the clones resulting in the figure 3-B below.
+13. Resulting calls were analysed and classified according to the spectra of base changes within the clones resulting in the figure 3-B.
 
