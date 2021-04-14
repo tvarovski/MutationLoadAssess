@@ -226,31 +226,17 @@ To make make all of the filtering I am using a [PySpark](https://spark.apache.or
 
 Preliminary Results from Mutect2 analysis follow the expectations with C->T mutations constituting the majority of the new variants. Interestingly, in corcordance with the results described by the research article #2 there seems to be no corellation between the location of the biopsied sample and observed signature which suggests that the even a short exposure intervals can have a measurable outcome. 
 
+Preliminary summary of the Mutect Output
+
 ![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
+*Figure Legend:*
+>The spectra of SNP base changes in the clones as preliminairly identified by Mutect2 variant caller. For each base change the reverse complements are also included.
 
-Preliminary summary of the mutation spectra:
 
-| Sample_Name |	Substitution_Type | Events |
-| --- | --- | --- |
-| D1-R-F |C to T | 502 |
-| D1-R-F | C to A | 239 |
-| D1-R-F | C to G | 82 |
-| D1-R-F | T to C | 231 |
-| D1-R-F | T to G | 100 |
-| D1-R-F | T to A | 135 |
-| D1-R-H1 | C to T | 706 |
-| D1-R-H1 | C to A | 137 |
-| D1-R-H1 | C to G | 72 |
-| D1-R-H1 | T to C | 181 |
-| D1-R-H1 | T to G | 76 |
-| D1-R-H1 | T to A | 88 |
+![Preliminary_Results_Table](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect_table.png?raw=true)
+>The number of somatic mutations (SNPs) detected in each analysed clone with breakdown by base change spectra.
 
-| Sample_Name | Total_SNPs |
-| --- | --- |
-| D1-R-F | 1289 |
-| D1-R-H1 | 1260 |
-
-Already seen, some discrepancies are visible. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on.
+Already seen, some discrepancies are visible. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on. It is possible that this is due the original summary being conducted for all mutations and not just SNPs like I have done.
 
 ---
 ## Discussion
