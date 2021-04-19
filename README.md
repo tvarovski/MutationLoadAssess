@@ -44,6 +44,7 @@ The following is the ordered list of steps and materials required to conduct the
 8. Processing BAM files according to the [Genome Analysis Toolkit (GATK)](https://gatk.broadinstitute.org/hc/en-us) [best practices pipeline](https://gatk.broadinstitute.org/hc/en-us/sections/360007226651-Best-Practices-Workflows).
 
 >The preprocessed (steps 1-8) WGS data used in this study was uploaded into dbGAP under accession number ```phs001182.v1.p1``` in a BAM format.
+
 ---
 9. Calling the SNVs by using three independent tools: haplotype caller from [GATK](https://gatk.broadinstitute.org/hc/en-us), [VarScan2](https://github.com/dkoboldt/varscan) and [MuTect](https://github.com/broadinstitute/mutect). Variant calling was limited to genomic regions with 10X+ coverage with 3+ reads supporting the call. Only variants common between outputs of all three tools were used in the analysis.
 10. Selecting for the somatic variants that are present only in the individuals' fibroblasts, but not blood. This step removes all common mutations between the clonal fibroblast sample and blood.
@@ -54,7 +55,7 @@ The following is the ordered list of steps and materials required to conduct the
 
 ### Data Aquisition and Pre-Processing
 
-The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. I've included a summary of the process [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/input/README.md#input-data)
+The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. I've included a summary of this multi-step process [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/input/README.md#input-data). 
 
 ## Variant Detection
 For finding somatic variants, GATK v4.1.8.1 and Picard 2.23.0 was used.
