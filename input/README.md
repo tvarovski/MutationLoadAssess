@@ -1,4 +1,4 @@
-# Data
+# Input Data
 
 ## Figure to Reproduce:
 ![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
