@@ -2,12 +2,7 @@
 
 ## Figure to Reproduce:
 ![Figure3 B, ref1](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/references/figureToReproduce.PNG)
-
-*Figure Legend:*
-
 >The number of somatic mutations detected in each clone and the rate of accumulation of mutations per year are provided. (B) The spectra of base changes in the clones. For each base change the reverse complements are also included.
-
----
 
 ## Materials And Methods For Figure Reproduction:
 
@@ -25,11 +20,9 @@
 12. Variant calls with allelic frequencies different than 45-55% (heterozygous) and 90%+ (homozygous) were discarted.
 13. Resulting calls were analysed and classified according to the spectra of base changes within the clones resulting in the figure 3-B below.
 
-To be updated when the project results are available
-
 ---
 
-### Data Aquisition and Pre-Processing
+## Data Aquisition and Pre-Processing
 
 The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. 
 
@@ -91,7 +84,7 @@ After downloading and decrypting, the datasets are in the .sra format. To change
 $ sam-dump SRRnumber | samtools view -bS - > SRRnumber.bam
 ```
 
-#### Reference Genome
+## Reference Genome
 The reference genome can be aquired by downloading it using the command below
 ```bash
 $ wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
@@ -104,7 +97,7 @@ $ samtools faidx hg19.fa
 ```bash
 $ java -jar picard.jar CreateSequenceDictionary R=hg19.fa O=hg19.dict
 ```
-#### Indexing Samples
+## Indexing Samples
 Before the samples can be used by GATK they must be indexed as well. To do that you can use samtools as well.
 ```bash
 $ samtools index SampleName.bam
