@@ -100,22 +100,21 @@ $ gatk VariantsToTable \
 Then I downloaded the resulting table files and used them for further filtering and analysis with my custom python script / Jupyter Notebook.
 
 ### Haplotype Caller
-First, I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run, one can use the command below:
+First, I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nontheless comparable. To run varaint discovery, one can use the command below:
 
 ```bash
-$ gatk HaplotypeCallerSpark  \
-   -R <reference_genome> \
-   -I <sample_name> \
-   -O <output_name.vcf.gz>
-```
-
-Unfortunately, this method didn't work for me on the argon cluster. Instead I used the production version of HaplotypeCaller:
-
-```bash
-$ gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 \
+$ gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 -ERC GVCF \
    -R $REFERENCE \
    -I $SAMPLE \
    -O $OUTPUT
+```
+Next, to call variants:
+
+```bash
+$ gatk --java-options "-Xmx4g" GenotypeGVCFs \
+   -R $REFERENCE \
+   -V $INPUT_GVCF \
+   -O $OUTPUT_VCF
 ```
 
 HaplotypeCaller doesn't have a functionality of filtering variants from a matched normal like Mutect2 does therefore I will be writing custom python code to resolve this. Additionally, HaplotypeCaller's output (GVCF) is different from Mutect2 (VCF), so I need to find out how to use the GVCF format and how to call/filter variants based on this output file.
