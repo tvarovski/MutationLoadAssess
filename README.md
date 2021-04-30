@@ -53,6 +53,10 @@ The following is the ordered list of steps and materials required to conduct the
 13. Analysis and classification of the resulting variant calls according to the spectra of base changes within the clones.
 14. Drawing the final analysis based on the base change spectra results in the reproduced figure.
 
+---
+My Analysis Followed The Workflow Presented Below:
+![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.svg)
+
 ### Data Aquisition and Pre-Processing
 
 The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. I've included a summary of this multi-step process [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/input/README.md#input-data). 
