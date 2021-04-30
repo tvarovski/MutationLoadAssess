@@ -151,14 +151,14 @@ The resulting datasets are then combined into one table with additional column c
 Results from my analysis follow the mutation spectra expectations with all proportions of the events sonserved and with C->T mutations constituting the majority of the detected variants. Interestingly, in corcordance with the results described by the research article #2 there seems to be no corellation between the location of the biopsied sample and observed signature which suggests that the even a short exposure intervals can have a measurable outcome.
 
 Resulting Mutation Spectra
-![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
+![Results](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/FinalSpectra.PNG)
 >The spectra of SNP base changes in the clones as identified by  intersecting results Mutect2 and HaplotypeCaller variant callers. Known dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)) variants were removed from the results. Only variants with allelic frequencies between 0.45-0.55 or > 0.9 were taken into account. For each base change the reverse complements are also included.
 
 
-![Preliminary_Results_Table](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect_table.png?raw=true)
+![ResultsTable](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/FinalSpectraTable.PNG)
 >The number of somatic mutations (SNPs) detected in each analysed clone with breakdown by base change spectra.
 
-Already seen, some discrepancies are visible. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on. It is possible that this is due the original summary being conducted for all mutations and not just SNPs like I have done.
+Some discrepancies can be observed. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on. It is possible that this is due the original summary being conducted for all mutations and not just SNPs like I have done.
 
 ---
 ## Discussion
