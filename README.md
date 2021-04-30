@@ -148,12 +148,11 @@ The resulting datasets are then combined into one table with additional column c
 ---
 ## Results
 
-Preliminary Results from Mutect2 analysis follow the expectations with C->T mutations constituting the majority of the new variants. Interestingly, in corcordance with the results described by the research article #2 there seems to be no corellation between the location of the biopsied sample and observed signature which suggests that the even a short exposure intervals can have a measurable outcome. 
+Results from my analysis follow the mutation spectra expectations with all proportions of the events sonserved and with C->T mutations constituting the majority of the detected variants. Interestingly, in corcordance with the results described by the research article #2 there seems to be no corellation between the location of the biopsied sample and observed signature which suggests that the even a short exposure intervals can have a measurable outcome.
 
-Preliminary summary of the Mutect Output
-
+Resulting Mutation Spectra
 ![Preliminary_Results](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect.png?raw=true)
->The spectra of SNP base changes in the clones as preliminairly identified by Mutect2 variant caller. For each base change the reverse complements are also included.
+>The spectra of SNP base changes in the clones as identified by  intersecting results Mutect2 and HaplotypeCaller variant callers. Known dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)) variants were removed from the results. Only variants with allelic frequencies between 0.45-0.55 or > 0.9 were taken into account. For each base change the reverse complements are also included.
 
 
 ![Preliminary_Results_Table](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/Preliminary_Result_Mutect_table.png?raw=true)
