@@ -53,10 +53,6 @@ The following is the ordered list of steps and materials required to conduct the
 13. Analysis and classification of the resulting variant calls according to the spectra of base changes within the clones.
 14. Drawing the final analysis based on the base change spectra results in the reproduced figure.
 
----
-My Analysis Followed The Workflow Presented Below:
-![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.png)
-
 ### Data Aquisition and Pre-Processing
 
 The data for this project was aquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. I've included a summary of this multi-step process [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/input/README.md#input-data). 
@@ -148,6 +144,13 @@ Where `fields` are names of the relevant positional and quality metrics for the 
 ### Plotting The Data
 
 The resulting datasets are then combined into one table with additional column containing the sample information. Such table can be used for making the final figure (stacked 100% percent bar chart) in MS Excel.
+
+### Analysis Workflow
+
+The workflow below is a high-level depiction of the steps performed to reproduce the final figure.
+
+
+![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.png)
 
 ---
 ## Results
