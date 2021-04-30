@@ -55,7 +55,7 @@ The following is the ordered list of steps and materials required to conduct the
 
 ---
 My Analysis Followed The Workflow Presented Below:
-![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.svg)
+![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.png)
 
 ### Data Aquisition and Pre-Processing
 
