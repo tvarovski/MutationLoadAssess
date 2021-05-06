@@ -165,14 +165,12 @@ Resulting Mutation Spectra
 ![ResultsTable](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/FinalSpectraTable.PNG)
 >The number of somatic mutations (SNPs) detected in each analysed clone with breakdown by base change spectra.
 
-Some discrepancies can be observed. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on. It is possible that this is due the original summary being conducted for all mutations and not just SNPs like I have done.
+Some discrepancies between original and my reproduced figure can be observed. For one sample I have ~100 less calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on. It is possible that this is due the original summary being conducted for all mutations and not just SNPs like I have done.
 
----
 ## Discussion
 
-To Be Continued
+Irrespective of minor discrepancies, my reproduced pipeline faithfully reproduces the conclusions from the original paper with trends and proportions of the mutation spectra conserved. As observed in the original study, the endogenous and exogenous factors have a comparable impact on the mutagenesis. Additionally, skin areas that are more sun-exposed acquired more C->T mutations supporting the claim that it is UV radiation that is responsible for these nucleotide changes. Finally, this pipeline can be now used to study the effects of other somatic mutagenic factors in mammalian tissue culture systems.
 
----
 ## Unexpected Contingencies
 
 Some challenges I've encountered were mostly centered around how to acquire data in the first place. For one, it is not publicly available so I had to create an account for the database it was held in, I had to be added as a downloader for that study through my PI, I had to download proprietary software for securely downloading the data from the servers (which hasn't been without problems and errors and troubleshooting to get it to work) and later processing. Even before downloading, I wasn't prepared for acquiring 400GB of data, I had to make space for that on my Argon account where I will be continuing the project. After downloading it turned out that the data is in an unfamiliar file format (SRA) which has to be converted to BAM for it to work in bioinformatic pipelines, and it also took me a while to figure out how to do it... Also, working with latge datasets takes proportionately more amount of time for downloading and processingwhich only adds to the frustration when something doesn't work.
