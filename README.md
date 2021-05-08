@@ -73,20 +73,11 @@ Only common variants between all callers were taken into an account and filtered
 The first step is to standardize all of the outputs from the callers into a simple table. To make all of the filterings I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository-attached [Jupyter Notebook file](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/data_parser.ipynb).
 
 ### Dealing With [Variant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format) (VCF) Files
-The outputs of the above variant calling programs are in a VCF format, a format that is quite difficult to work with as the columns are not always of standard input. Therefore, I want to convert the VCF files into a CSV file that will be much easier to use during the filtering. To do that I've found a relevant python library with bioinformatics tools called `scikit-allel` that seems to be able to convert VCF files to CSV format. To acquire the library on a Linux machine alongside all of the required dependencies for full functionality type:
-```bash
-$ pip install scikit-allel[full]
-```
-Now, to convert a file from VCF to CSV a following code snippet should suffice:
-```python
-import allel
-allel.vcf_to_csv('example.vcf', 'example.csv', fields=['CHROM', 'POS', 'DP', 'REF', 'ALT', 'QUAL'])
-```
-Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the [VCF file encoding standards](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
+The outputs of the above variant calling programs are in a VCF format, a format that is quite difficult to work with as the columns are not always of standard input. Therefore, I converted the VCF files into a CSV file for it to be much easier to use during the filtering. To do that I've found a relevant python library with bioinformatics tools called `scikit-allel` that seems to be able to convert VCF files to CSV format. To acquire the library on a Linux machine alongside all of the required dependencies for full functionality follow my instructions [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/tree/main/code#dealing-with-variant-call-format-vcf-files)
 
-### Plotting The Data
+## Plotting The Data
 
-The resulting datasets are then combined into one table with an additional column containing the sample information. Such a table can be used for making the final figure (stacked 100% percent bar chart) in MS Excel.
+The resulting datasets were then combined into one table with one additional column containing the sample information. This table was used for making the final figure showing stacked 100% percent bar chart in MS Excel with the use of Power Pivot. The tables and figures can be viewed in the repository-attached file [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/figures/SpectraSummarySpreadsheet.xlsx).
 
 ---
 ## Results
