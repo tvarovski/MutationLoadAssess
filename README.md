@@ -58,75 +58,17 @@ The following is the ordered list of steps and materials required to conduct the
 
 The data for this project was acquired by downloading it from the [dbGaP](https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=list_wishlists) repository. I've included a summary of this multi-step process [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/input/README.md#input-data). 
 
+### Analysis Workflow
+
+The workflow below is a high-level depiction of the steps performed to reproduce the final figure.
+
+![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.png)
+
 ## Variant Detection
-For finding somatic variants, GATK v4.1.8.1 and Picard 2.23.0 were used.
-
-### Mutect2
-To run the Mutect2 variant detection program, first one needs to find the `<matched_blood_sample_name>` and `<fibroblast_sample_name>`. These can be extracted from the BAM read group headers by using the following command:
-```bash
-$ gatk GetSampleName -I <input.bam> -O <output.txt>
-$ cat output.txt
-```
-```bash
-$ gatk Mutect2 -R <reference_genome> \
-    -I <fibroblast_sample> \
-    -I <matched_blood_sample> \
-    -normal <matched_blood_sample_name> \
-    -tumor <fibroblast_sample_name> \
-    -O <outputname_name.vfc.gz>
-```
-
-After the variant detection has finished (this takes a long time) it is needed to filter the calls based on probability. I used default settings. To do that the following command was used:
-
-```bash
-$ gatk FilterMutectCalls \
-   -V <input.vcf.gz> \
-   -O <output.filtered.vcf.gz>
-```
-Next, I exported the table into a TSV file. This was done by using another GATK program by taking the official GATK advice: "No, really, do not write your own parser if you can avoid it. This is not a comment on how smart or how competent we think you are -- it is a comment on how annoyingly obtuse and convoluted the VCF format is.", and "Why are we sticking with it [VCF format] anyway? Because, as Winston Churchill famously put it, VCF is the worst variant call representation, except for all the others."
-
-Needless to say, I had my struggles to understand how this file format follows logic.
-
-Options are available to select particular fields for analysis. I stuck with `CHROM`, `TYPE`, `REF`, `ALT`, `AD`, `AF`. To convert to a table:
-
-```bash
-$ gunzip <input.vcf.gz>
-
-$ gatk VariantsToTable \
-     -V <input.vcf> \
-     -F CHROM -F POS -F TYPE -F REF -F ALT -GF AD -GF AF \
-     -O <oOutput.tsv>
-```
-
-Then I downloaded the resulting table files and used them for further filtering and analysis with my custom python script / Jupyter Notebook.
-
-### Haplotype Caller
-First, I decided to run a Beta Spark version of Haplotype Caller for distributed computation([HaplotypeCallerSpark](https://gatk.broadinstitute.org/hc/en-us/articles/360037433931-HaplotypeCallerSpark-BETA-)) to save on processing time since the production version of the [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360036452392-HaplotypeCaller) doesn't have such functionality. The results should be nonetheless comparable. To run variant discovery, one can use the command below:
-
-```bash
-$ gatk --java-options "-Xmx4g" HaplotypeCaller --native-pair-hmm-threads 16 -ERC GVCF \
-   -R $REFERENCE \
-   -I $SAMPLE \
-   -O $OUTPUT
-```
-Next, to call variants:
-
-```bash
-$ gatk --java-options "-Xmx4g" GenotypeGVCFs \
-   -R $REFERENCE \
-   -V $INPUT_GVCF \
-   -O $OUTPUT_VCF
-```
-
-HaplotypeCaller doesn't have the functionality of filtering variants from a matched normal as Mutect2 does therefore I will be writing custom python code to resolve this. Additionally, HaplotypeCaller's output (GVCF) is different from Mutect2 (VCF), so I need to find out how to use the GVCF format and how to call/filter variants based on this output file.
-
-### Varscan2
-This program is somewhat problematic. It requires the use of `samtools mpileup` to create a mpileup file. This step takes a really long time and creates enormous in size files... Next, these files need to be piped into Varscan's `mpileup2snp` for variant calling. I have not been able to perform this step yet.
-
+For finding somatic variants, GATK v4.1.8.1 and Picard 2.23.0 were used. I used two variant callers to detect mutations: Mutect2 and HaplotypeCaller. The instructions on how I used Mutect2 can be found [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/tree/main/code#mutect2), and instructions for HaplotypeCaller variant calling and subsequent filtering can be found [here](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/tree/main/code#haplotype-caller). After the varaints were called, all VCF outputs were exported into a TSV tables as detailed in instructions above. Due unexpected problems, my analysis does not include Varscan2, additional program that was used in the original analysis ([problem details](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/tree/main/code#varscan2)).
 
 ## Intersecting Caller Common Variants And Removing Known SNPs
-Only common variants between all callers were taken into an account and filtered based on the various quality metrics. To do that I decided to write my program as I didn't find anything else that would satisfy the needs of this project. 
-Next, I took the resulting tables and removed variants that matched positions of known SNPs in dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)). The resulting dataset was used for further analysis.
+Only common variants between all callers were taken into an account and filtered based on the various quality metrics. To do that I decided to write my program as I didn't find anything else that would satisfy the needs of this project. Next, I took the resulting tables and removed variants that matched positions of known SNPs in dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)). The resulting dataset was used for further analysis.
 
 The first step is to standardize all of the outputs from the callers into a simple table. To make all of the filterings I am using a [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) library for python. The code is available in the repository-attached [Jupyter Notebook file](https://github.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/blob/main/code/data_parser.ipynb).
 
@@ -142,17 +84,9 @@ allel.vcf_to_csv('example.vcf', 'example.csv', fields=['CHROM', 'POS', 'DP', 'RE
 ```
 Where `fields` are names of the relevant positional and quality metrics for the variant calls as outlined by the [VCF file encoding standards](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
-
 ### Plotting The Data
 
 The resulting datasets are then combined into one table with an additional column containing the sample information. Such a table can be used for making the final figure (stacked 100% percent bar chart) in MS Excel.
-
-### Analysis Workflow
-
-The workflow below is a high-level depiction of the steps performed to reproduce the final figure.
-
-
-![Flowchart](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/flowchart.png)
 
 ---
 ## Results
