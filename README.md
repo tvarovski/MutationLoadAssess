@@ -84,13 +84,12 @@ The resulting datasets were then combined into one table with one additional col
 
 Results from my analysis follow the mutation spectra expectations with all proportions of the events conserved and with C->T mutations constituting the majority of the detected variants. Interestingly, in concordance with the results described by research article #2 there seems to be no correlation between the location of the biopsied sample and the observed signature which suggests that even short exposure intervals can have a measurable outcome.
 
-Resulting Mutation Spectra
+Mutation Spectra of My Results
 ![Results](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/FinalSpectra.PNG)
->The spectra of SNP base changes in the clones as identified by  intersecting results Mutect2 and HaplotypeCaller variant callers. Known dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)) variants were removed from the results. Only variants with allelic frequencies between 0.45-0.55 or > 0.9 were taken into account. For each base change the reverse complements are also included.
-
+>The spectra of SNP base changes in the analyzed clones as identified by intersecting results Mutect2 and HaplotypeCaller variant callers. Known dbSNPs ([version 138](https://www.ncbi.nlm.nih.gov/projects/SNP/snp_summary.cgi?view+summary=view+summary&build_id=138)) variants were removed from the results. Only variants with allelic frequencies between 0.45-0.55 or > 0.9 were taken into account. For each base change the reverse complements are also included. Legend with spectra color codes is to the right of the figure.
 
 ![ResultsTable](https://raw.githubusercontent.com/Intro-Sci-Comp-UIowa/biol-4386-course-project-tvarovski/main/figures/FinalSpectraTable.PNG)
->The number of somatic mutations (SNPs) detected in each analysed clone with breakdown by base change spectra.
+>The number of somatic mutations (SNPs) detected in each analysed clone with breakdown by base change spectra. The C→T mutations constituting the majority of substitutions was highlighted in red.
 
 Some discrepancies between the original and my reproduced figure can be observed. For one sample I have ~100 fewer calls already than the final figure in the paper and this will likely decrease more when intersected with calls made by other programs that I'm still working on. This may be due to the original summary being conducted for all mutations and not just SNPs as I have done.
 
